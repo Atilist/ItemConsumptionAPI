@@ -19,6 +19,11 @@ public class ConsumptionTestItem extends TemplateItem implements SlowlyConsumedI
     }
 
     @Override
+    public int getUsageSoundInterval() {
+        return 4;
+    }
+
+    @Override
     public void playUsageSound(World world, Entity user) {
         world.playSound(user, "random.fuse", 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
     }
