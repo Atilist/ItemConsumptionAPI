@@ -20,7 +20,7 @@ public abstract class ItemStackMixin {
     @Inject(at = @At("HEAD"), method = "use")
     public void initiateSlowUse(World world, PlayerEntity user, CallbackInfoReturnable<ItemStack> cir) {
         if (getItem() instanceof SlowlyConsumedItem slowlyConsumedItem && user instanceof ItemUser itemUser) {
-            itemUser.itemConsumptionAPI$setItemInSlowUse(ItemStack.class.cast(this), slowlyConsumedItem.getUsageDuration());
+            itemUser.itemConsumptionAPI$setItemInSlowUse(ItemStack.class.cast(this), slowlyConsumedItem.getUsageDuration(ItemStack.class.cast(this)));
         }
     }
 }

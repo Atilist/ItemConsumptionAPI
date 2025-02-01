@@ -14,22 +14,22 @@ public class ConsumptionTestItem extends TemplateItem implements SlowlyConsumedI
     }
 
     @Override
-    public int getUsageDuration() {
+    public int getUsageDuration(ItemStack itemStack) {
         return 16;
     }
 
     @Override
-    public int getUsageSoundInterval() {
+    public int getUsageSoundInterval(ItemStack itemStack) {
         return 4;
     }
 
     @Override
-    public void playUsageSound(World world, Entity user) {
+    public void playUsageSound(World world, Entity user, ItemStack itemStack) {
         world.playSound(user, "random.fuse", 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
     }
 
     @Override
-    public void playConsumptionSound(World world, Entity consumer) {
+    public void playConsumptionSound(World world, Entity consumer, ItemStack itemStack) {
         world.playSound(consumer, "random.explode", 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
     }
 

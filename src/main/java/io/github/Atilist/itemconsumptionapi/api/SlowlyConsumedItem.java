@@ -6,13 +6,13 @@ import net.minecraft.world.World;
 
 public interface SlowlyConsumedItem {
 
-    int getUsageDuration();
+    int getUsageDuration(ItemStack itemStack);
 
-    int getUsageSoundInterval();
+    int getUsageSoundInterval(ItemStack itemStack);
 
-    void playUsageSound(World world, Entity user);
+    void playUsageSound(World world, Entity user, ItemStack itemStack);
 
-    void playConsumptionSound(World world, Entity consumer);
+    void playConsumptionSound(World world, Entity consumer, ItemStack itemStack);
 
     ItemStack slowUse(ItemStack itemStack, Entity user, World world, int x, int y, int z);
 }

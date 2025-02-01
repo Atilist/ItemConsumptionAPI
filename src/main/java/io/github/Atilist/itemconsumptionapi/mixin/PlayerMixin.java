@@ -36,10 +36,10 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
             } else if (!itemStack.equals(itemInSlowUse)) {
                 clearItemInSlowUse();
             } else if (itemInSlowUse.getItem() instanceof SlowlyConsumedItem slowlyConsumedItem) {
-                if (slowlyConsumedItem.getUsageSoundInterval() == 0) {
-                    slowlyConsumedItem.playUsageSound(world, this);
-                } else if (usageDuration % slowlyConsumedItem.getUsageSoundInterval() == 0) {
-                    slowlyConsumedItem.playUsageSound(world, this);
+                if (slowlyConsumedItem.getUsageSoundInterval(itemInSlowUse) == 0) {
+                    slowlyConsumedItem.playUsageSound(world, this, itemInSlowUse);
+                } else if (usageDuration % slowlyConsumedItem.getUsageSoundInterval(itemInSlowUse) == 0) {
+                    slowlyConsumedItem.playUsageSound(world, this, itemInSlowUse);
                 }
                 if (--usageDuration == 0 && !world.isRemote) {
                     finishConsumption(slowlyConsumedItem);
@@ -50,7 +50,7 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
 
     @Unique
     public void finishConsumption(SlowlyConsumedItem slowlyConsumedItem) {
-        slowlyConsumedItem.playConsumptionSound(world, this);
+        slowlyConsumedItem.playConsumptionSound(world, this, itemInSlowUse);
         int itemInSlowUseCount = itemInSlowUse.count;
         ItemStack itemstack = slowlyConsumedItem.slowUse(itemInSlowUse, this, world, (int) x, (int) y, (int) z);
         if (itemstack != itemInSlowUse || itemstack != null && itemstack.count != itemInSlowUseCount) {
