@@ -30,10 +30,10 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
     @Inject(at = @At("HEAD"), method = "tick")
     public void updateItemUse(CallbackInfo ci) {
         if (itemInSlowUse != null) {
-            ItemStack itemstack = inventory.getSelectedItem();
-            if (itemstack == null) {
+            ItemStack itemStack = inventory.getSelectedItem();
+            if (itemStack == null) {
                 clearItemInSlowUse();
-            } else if (itemstack != itemInSlowUse) {
+            } else if (!itemStack.equals(itemInSlowUse)) {
                 clearItemInSlowUse();
             } else if (itemInSlowUse.getItem() instanceof SlowlyConsumedItem slowlyConsumedItem) {
                 if (slowlyConsumedItem.getUsageSoundInterval() == 0) {
@@ -64,7 +64,7 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
 
     @Unique
     public void itemConsumptionAPI$setItemInSlowUse(ItemStack itemStack, int usageDuration) {
-        if (itemInSlowUse == itemStack) {
+        if (itemInSlowUse != null && itemStack != null && itemStack.equals(itemInSlowUse)) {
             return;
         }
         itemInSlowUse = itemStack;
