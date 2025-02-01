@@ -33,6 +33,7 @@ public class ConsumptionTestItem extends TemplateItem implements SlowlyConsumedI
         if (itemStack == null) {
             return null;
         }
+        world.playSound(consumer, "random.explode", 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
         itemStack.count--;
         return itemStack;
     }
