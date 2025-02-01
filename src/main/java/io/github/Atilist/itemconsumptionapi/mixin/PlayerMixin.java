@@ -36,7 +36,9 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
             } else if (itemstack != itemInSlowUse) {
                 clearItemInSlowUse();
             } else if (itemInSlowUse.getItem() instanceof SlowlyConsumedItem slowlyConsumedItem) {
-                if (usageDuration % 4 == 0) {
+                if (slowlyConsumedItem.getUsageSoundInterval() == 0) {
+                    slowlyConsumedItem.playUsageSound(world, this);
+                } else if (usageDuration % slowlyConsumedItem.getUsageSoundInterval() == 0) {
                     slowlyConsumedItem.playUsageSound(world, this);
                 }
                 if (--usageDuration == 0 && !world.isRemote) {
@@ -72,6 +74,11 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
     @Unique
     public void itemConsumptionAPI$stopSlowlyUsingItem() {
         clearItemInSlowUse();
+    }
+
+    @Override
+    public boolean itemConsumptionAPI$isSlowlyUsingItem() {
+        return itemInSlowUse != null;
     }
 
     @Unique

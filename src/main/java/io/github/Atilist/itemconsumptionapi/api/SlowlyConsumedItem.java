@@ -8,6 +8,8 @@ public interface SlowlyConsumedItem {
 
     int getUsageDuration();
 
+    int getUsageSoundInterval();
+
     void playUsageSound(World world, Entity user);
 
     void playConsumptionSound(World world, Entity consumer);
