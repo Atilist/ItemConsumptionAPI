@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
-  "id": "itemconsumptionapi",
+  "id": "itemconsumptionapitest",
   "version": "${version}",
 
-  "name": "Item Consumption API",
-  "description": "Allows items to not be consumed immediately. Adds options to add an animation and sounds as well.",
+  "name": "Item Consumption API Test",
+  "description": "Test mod for Item Consumption API.",
   "authors": [
     "Atilist"
   ],
@@ -19,16 +19,14 @@
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
-      "io.github.atilist.itemconsumptionapi.events.init.InitListener"
+      "io.github.atilist.itemconsumptionapitest.events.init.ItemListener",
+      "io.github.atilist.itemconsumptionapitest.events.init.TextureListener"
     ],
     "stationapi:event_bus_client": [
     ],
     "stationapi:event_bus_server": [
     ]
   },
-  "mixins": [
-    "itemconsumptionapi.mixins.json"
-  ],
 
   "depends": {
     "minecraft": "1.0.0-beta.7.3"
