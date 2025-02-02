@@ -52,8 +52,8 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
     public void finishConsumption(SlowlyConsumedItem slowlyConsumedItem) {
         int itemInSlowUseCount = itemInSlowUse.count;
         ItemStack itemstack = slowlyConsumedItem.onConsumption(itemInSlowUse, this, world, (int) x, (int) y, (int) z);
+        this.inventory.main[this.inventory.selectedSlot] = itemstack;
         if (itemstack != itemInSlowUse || itemstack != null && itemstack.count != itemInSlowUseCount) {
-            this.inventory.main[this.inventory.selectedSlot] = itemstack;
             if (itemstack == null || itemstack.count <= 0) {
                 this.inventory.main[this.inventory.selectedSlot] = null;
             }
