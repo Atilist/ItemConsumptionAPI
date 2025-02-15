@@ -15,5 +15,6 @@ public class TextureListener {
     @EventListener
     public void registerTextures(TextureRegisterEvent event) {
         ItemListener.consumptionTest.setTexture(Identifier.of(NAMESPACE, "item/consumptionTest"));
+        ItemListener.usageTest.setTexture(Identifier.of(NAMESPACE, "item/usageTest"));
     }
 }
