@@ -2,6 +2,7 @@ package io.github.atilist.itemconsumptionapi.mixin;
 
 import io.github.atilist.itemconsumptionapi.api.ItemUser;
 import io.github.atilist.itemconsumptionapi.api.SlowlyConsumedItem;
+import io.github.atilist.itemconsumptionapi.api.SlowlyUsedItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
@@ -35,13 +36,16 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
                 clearItemInSlowUse();
             } else if (!itemStack.equals(itemInSlowUse)) {
                 clearItemInSlowUse();
-            } else if (itemInSlowUse.getItem() instanceof SlowlyConsumedItem slowlyConsumedItem) {
-                if (slowlyConsumedItem.getUsageEffectInterval(itemInSlowUse) == 0) {
-                    slowlyConsumedItem.usageEffect(world, this, itemInSlowUse);
-                } else if (usageDuration % slowlyConsumedItem.getUsageEffectInterval(itemInSlowUse) == 0) {
-                    slowlyConsumedItem.usageEffect(world, this, itemInSlowUse);
+            } else if (itemInSlowUse.getItem() instanceof SlowlyUsedItem slowlyUsedItem) {
+                if (slowlyUsedItem.getUsageEffectInterval(itemInSlowUse) == 0) {
+                    slowlyUsedItem.usageEffect(world, this, itemInSlowUse);
+                } else if (usageDuration % slowlyUsedItem.getUsageEffectInterval(itemInSlowUse) == 0) {
+                    slowlyUsedItem.usageEffect(world, this, itemInSlowUse);
                 }
-                if (--usageDuration == 0 && !world.isRemote) {
+                if (usageDuration > 0) {
+                    usageDuration--;
+                }
+                if (usageDuration == 0 && !world.isRemote && slowlyUsedItem instanceof SlowlyConsumedItem slowlyConsumedItem) {
                     finishConsumption(slowlyConsumedItem);
                 }
             }
@@ -49,9 +53,9 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
     }
 
     @Unique
-    public void finishConsumption(SlowlyConsumedItem slowlyConsumedItem) {
+    public void finishConsumption(SlowlyConsumedItem slowlyUsedItem) {
         int itemInSlowUseCount = itemInSlowUse.count;
-        ItemStack itemstack = slowlyConsumedItem.onConsumption(itemInSlowUse, this, world, (int) x, (int) y, (int) z);
+        ItemStack itemstack = slowlyUsedItem.onConsumption(itemInSlowUse, this, world, (int) x, (int) y, (int) z);
         this.inventory.main[this.inventory.selectedSlot] = itemstack;
         if (itemstack != itemInSlowUse || itemstack != null && itemstack.count != itemInSlowUseCount) {
             if (itemstack == null || itemstack.count <= 0) {
@@ -84,5 +88,10 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
     public void clearItemInSlowUse() {
         itemInSlowUse = null;
         usageDuration = 0;
+    }
+
+    @Override
+    public ItemStack itemConsumptionAPI$getItemInUse() {
+        return itemInSlowUse;
     }
 }

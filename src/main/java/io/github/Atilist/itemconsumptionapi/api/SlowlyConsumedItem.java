@@ -5,31 +5,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 /**
- * Allows items to not be consumed immediately but instead take time and create effects in the process.
+ * Adds all functionality of SlowlyUsedItem while also adding a consumption step when the usage duration is reached.
  */
-public interface SlowlyConsumedItem {
-
-    /**
-     * Specifies for how many ticks an item needs to be used before being consumed.
-     * @param itemStack ItemStack in case there is NBT relevant to usage duration.
-     * @return Number of ticks until the item gets consumed.
-     */
-    int getUsageDuration(ItemStack itemStack);
-
-    /**
-     * Determines the interval at which the usage effect happens.
-     * @param itemStack ItemStack in case there is NBT relevant to the interval.
-     * @return Interval length in ticks.
-     */
-    int getUsageEffectInterval(ItemStack itemStack);
-
-    /**
-     * Creates an effect during item usage.
-     * @param world World for effects to take place in.
-     * @param user Entity which uses the item.
-     * @param itemStack ItemStack in case there is NBT relevant to the effect.
-     */
-    void usageEffect(World world, Entity user, ItemStack itemStack);
+public interface SlowlyConsumedItem extends SlowlyUsedItem {
 
     /**
      * Called when the item has been used for long enough and is getting consumed.

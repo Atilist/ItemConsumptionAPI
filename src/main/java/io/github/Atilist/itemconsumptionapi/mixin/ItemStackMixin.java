@@ -1,7 +1,7 @@
 package io.github.atilist.itemconsumptionapi.mixin;
 
 import io.github.atilist.itemconsumptionapi.api.ItemUser;
-import io.github.atilist.itemconsumptionapi.api.SlowlyConsumedItem;
+import io.github.atilist.itemconsumptionapi.api.SlowlyUsedItem;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,7 +19,7 @@ public abstract class ItemStackMixin {
 
     @Inject(at = @At("HEAD"), method = "use")
     public void initiateSlowUse(World world, PlayerEntity user, CallbackInfoReturnable<ItemStack> cir) {
-        if (getItem() instanceof SlowlyConsumedItem slowlyConsumedItem && user instanceof ItemUser itemUser) {
+        if (getItem() instanceof SlowlyUsedItem slowlyConsumedItem && user instanceof ItemUser itemUser) {
             itemUser.itemConsumptionAPI$setItemInSlowUse(ItemStack.class.cast(this), slowlyConsumedItem.getUsageDuration(ItemStack.class.cast(this)));
         }
     }

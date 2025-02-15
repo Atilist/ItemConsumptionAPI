@@ -25,4 +25,10 @@ public interface ItemUser {
      * @return True when an item is in use and false where there is no item.
      */
     boolean itemConsumptionAPI$isSlowlyUsingItem();
+
+    /**
+     * Used to access the item in use.
+     * @return Currently used item if it is not null.
+     */
+    ItemStack itemConsumptionAPI$getItemInUse();
 }

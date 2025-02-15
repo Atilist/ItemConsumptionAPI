@@ -2,6 +2,7 @@ package io.github.atilist.itemconsumptionapitest.items;
 
 import io.github.atilist.itemconsumptionapi.api.SlowlyConsumedItem;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.modificationstation.stationapi.api.template.item.TemplateItem;
@@ -26,6 +27,13 @@ public class ConsumptionTestItem extends TemplateItem implements SlowlyConsumedI
     @Override
     public void usageEffect(World world, Entity user, ItemStack itemStack) {
         world.playSound(user, "random.fuse", 0.5F, world.random.nextFloat() * 0.1F + 0.9F);
+    }
+
+    @Override
+    public void onStopUsage(World world, Entity user, ItemStack itemStack) {
+        if (itemStack != null) {
+            itemStack.itemId = Item.WOODEN_SHOVEL.id;
+        }
     }
 
     @Override
