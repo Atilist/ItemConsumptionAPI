@@ -42,10 +42,10 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
                 } else if (usageDuration % slowlyUsedItem.getUsageEffectInterval(itemInSlowUse) == 0) {
                     slowlyUsedItem.usageEffect(world, this, itemInSlowUse);
                 }
-                if (usageDuration > 0) {
+                if (usageDuration > -1) {
                     usageDuration--;
                 }
-                if (usageDuration == 0 && !world.isRemote && slowlyUsedItem instanceof SlowlyConsumedItem slowlyConsumedItem) {
+                if (usageDuration <= 0 && !world.isRemote && slowlyUsedItem instanceof SlowlyConsumedItem slowlyConsumedItem) {
                     finishConsumption(slowlyConsumedItem);
                 }
             }
