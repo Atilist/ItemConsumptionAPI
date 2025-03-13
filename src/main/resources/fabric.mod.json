@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Item Consumption API",
-  "description": "Allows items to not be consumed immediately. Adds options to add an animation and sounds as well.",
+  "description": "Allows items to not be consumed immediately. Adds features to support items to play sounds during usage and to change into other items or disappear.",
   "authors": [
     "Atilist"
   ],
