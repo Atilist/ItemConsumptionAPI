@@ -6,6 +6,7 @@ import io.github.atilist.itemconsumptionapi.api.SlowlyUsedItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PlayerMixin extends LivingEntity implements ItemUser {
 
     @Shadow public PlayerInventory inventory;
+
     @Unique
     private ItemStack itemInSlowUse;
     @Unique
@@ -33,9 +35,9 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
         if (itemInSlowUse != null) {
             ItemStack itemStack = inventory.getSelectedItem();
             if (itemStack == null) {
-                clearItemInSlowUse();
+                itemConsumptionAPI$stopSlowlyUsingItem();
             } else if (!itemStack.equals(itemInSlowUse)) {
-                clearItemInSlowUse();
+                itemConsumptionAPI$stopSlowlyUsingItem();
             } else if (itemInSlowUse.getItem() instanceof SlowlyUsedItem slowlyUsedItem) {
                 if (slowlyUsedItem.getUsageEffectInterval(itemInSlowUse) == 0) {
                     slowlyUsedItem.usageEffect(world, this, itemInSlowUse);
@@ -76,6 +78,12 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
 
     @Unique
     public void itemConsumptionAPI$stopSlowlyUsingItem() {
+        if (itemInSlowUse != null) {
+            Item usedItem = itemInSlowUse.getItem();
+            if (usedItem instanceof SlowlyUsedItem slowlyUsedItem) {
+                slowlyUsedItem.onStopUsage(world, PlayerEntity.class.cast(this), itemInSlowUse);
+            }
+        }
         clearItemInSlowUse();
     }
 
