@@ -97,9 +97,4 @@ public abstract class PlayerMixin extends LivingEntity implements ItemUser {
         itemInSlowUse = null;
         usageDuration = 0;
     }
-
-    @Override
-    public ItemStack itemConsumptionAPI$getItemInUse() {
-        return itemInSlowUse;
-    }
 }
