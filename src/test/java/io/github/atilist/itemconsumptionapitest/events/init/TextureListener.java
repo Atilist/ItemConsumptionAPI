@@ -5,16 +5,15 @@ import net.modificationstation.stationapi.api.client.event.texture.TextureRegist
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.Namespace;
-import net.modificationstation.stationapi.api.util.Null;
 
 public class TextureListener {
 
     @Entrypoint.Namespace
-    public static final Namespace NAMESPACE = Null.get();
+    public static Namespace namespace;
 
     @EventListener
     public void registerTextures(TextureRegisterEvent event) {
-        ItemListener.consumptionTest.setTexture(Identifier.of(NAMESPACE, "item/consumptionTest"));
-        ItemListener.usageTest.setTexture(Identifier.of(NAMESPACE, "item/usageTest"));
+        ItemListener.consumptionTest.setTexture(Identifier.of(namespace, "item/consumptionTest"));
+        ItemListener.usageTest.setTexture(Identifier.of(namespace, "item/usageTest"));
     }
 }

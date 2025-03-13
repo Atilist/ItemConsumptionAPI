@@ -19,7 +19,6 @@
   "environment": "*",
   "entrypoints": {
     "stationapi:event_bus": [
-      "io.github.atilist.itemconsumptionapi.events.init.InitListener"
     ],
     "stationapi:event_bus_client": [
     ],

@@ -7,7 +7,6 @@ import net.modificationstation.stationapi.api.event.registry.ItemRegistryEvent;
 import net.modificationstation.stationapi.api.mod.entrypoint.Entrypoint;
 import net.modificationstation.stationapi.api.util.Identifier;
 import net.modificationstation.stationapi.api.util.Namespace;
-import net.modificationstation.stationapi.api.util.Null;
 
 public class ItemListener {
 
@@ -15,11 +14,11 @@ public class ItemListener {
     public static UsageTestItem usageTest;
 
     @Entrypoint.Namespace
-    public static final Namespace NAMESPACE = Null.get();
+    public static Namespace namespace;
 
     @EventListener
     public void registerItems(ItemRegistryEvent event) {
-        consumptionTest = new ConsumptionTestItem(Identifier.of(NAMESPACE, "consumption_test"));
-        usageTest = new UsageTestItem(Identifier.of(NAMESPACE, "usage_test"));
+        consumptionTest = new ConsumptionTestItem(Identifier.of(namespace, "consumption_test"));
+        usageTest = new UsageTestItem(Identifier.of(namespace, "usage_test"));
     }
 }
